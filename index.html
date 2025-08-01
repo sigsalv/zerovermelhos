@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Último Vermelho do Benfica</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffcccc 0%, #ffe6e6 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #800000;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .counter {
+      font-size: 12rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .days-label {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-top: -1rem;
+    }
+    .last-expulsion {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      color: #4d0000;
+      background-color: rgba(255,255,255,0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .stats {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 1.4rem;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .sporting {
+      color: green;
+      font-weight: bold;
+    }
+    .porto {
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>O Benfica não vê uma expulsão na Primeira Liga há:</h1>
+  <div class="counter" id="daysCounter">718</div>
+  <div class="days-label">dias</div>
+  <div class="last-expulsion">14 Ago 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
+  <div class="stats">
+    <div>No mesmo período de tempo:</div>
+    <div class="sporting">O Sporting viu 10 vermelhos</div>
+    <div class="porto">O Porto viu 13 vermelhos</div>
+  </div>
+
+  <script>
+    (function() {
+      const lastRedCardDate = new Date("2023-08-14");
+      const today = new Date();
+      const diffTime = today.getTime() - lastRedCardDate.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      document.getElementById("daysCounter").textContent = diffDays;
+    })();
+  </script>
+</body>
+</html>
