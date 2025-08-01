@@ -3,82 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <title>Último Vermelho do Benfica</title>
+  <meta property="og:title" content="Benfica não vê uma expulsão há 718 dias!" />
+  <meta property="og:description" content="Consulta em tempo real há quantos dias o Benfica não vê um vermelho na Liga." />
+  <meta property="og:image" content="https://i.imgur.com/mikU0yZ.jpeg" />
+  <meta property="og:url" content="https://zerovermelhos.tiiny.site/" />
+  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png">
   <style>
-    body {
-      background: linear-gradient(135deg, #ffcccc 0%, #ffe6e6 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #800000;
-      text-align: center;
-      overflow: hidden;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-    }
-    .counter {
-      font-size: 12rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    .days-label {
-      font-size: 3.5rem;
-      font-weight: bold;
-      margin-top: -1rem;
-    }
-    .last-expulsion {
-      margin-top: 1rem;
-      font-size: 1.8rem;
-      color: #4d0000;
-      background-color: rgba(255,255,255,0.5);
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .stats {
-      position: absolute;
-      bottom: 2rem;
-      font-size: 1.4rem;
-      color: black;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .sporting {
-      color: green;
-      font-weight: bold;
-    }
-    .porto {
-      color: blue;
-      font-weight: bold;
-    }
+    body { background: linear-gradient(135deg, #ffcccc 0%, #ffe6e6 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 2vh; height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #800000; text-align: center; overflow: hidden; }
+    h1 { font-size: 2.5rem; margin-bottom: 5vh; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+    .counter { font-size: 12rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .days-label { font-size: 3.5rem; font-weight: bold; margin-top: -1rem; }
+    .last-expulsion { margin-top: 1rem; font-size: 1.8rem; color: #4d0000; background-color: rgba(255,255,255,0.5); padding: 0.5rem 1rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .stats { font-size: 1.8rem; color: black; display: flex; flex-direction: column; gap: 0.3rem; }
+    .sporting { color: green; font-weight: bold; }
+    .porto { color: blue; font-weight: bold; }
+    .share-buttons { margin-top: 5vh; display: flex; gap: 1rem; }
+    .share-buttons a { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background-color: #1877F2; text-decoration: none; }
+    .share-buttons a.twitter { background-color: #000000; }
+    .share-buttons img { width: 24px; height: 24px; }
   </style>
 </head>
 <body>
-  <h1>O Benfica não vê uma expulsão na Primeira Liga há:</h1>
-  <div class="counter" id="daysCounter">718</div>
-  <div class="days-label">dias</div>
-  <div class="last-expulsion">14 Ago 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
-  <div class="stats">
-    <div>No mesmo período de tempo:</div>
-    <div class="sporting">O Sporting viu 10 vermelhos</div>
-    <div class="porto">O Porto viu 13 vermelhos</div>
+  <h1><img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height: 1.5em; vertical-align: middle; margin-right: 0.5rem;"> O Benfica não vê uma expulsão na Primeira Liga há:</h1>
+  <div style="display: flex; align-items: baseline; gap: 1rem;">
+    <div class="counter" id="daysCounter">718</div>
+    <div class="days-label">dias</div>
   </div>
-
+  <div class="last-expulsion">14 Ago 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
+  <div class="stats" style="margin-top: 5vh;">
+    <div>No mesmo período:</div>
+    <div class="sporting"><img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height: 1.5em; vertical-align: middle; margin-right: 0.3rem;"> O Sporting viu 10 vermelhos</div>
+    <div class="porto"><img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height: 1.5em; vertical-align: middle; margin-right: 0.3rem;"> O Porto viu 13 vermelhos</div>
+  </div>
+  <div class="share-buttons">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://zerovemelhos.tiny.site" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+    </a>
+    <a href="https://twitter.com/intent/tweet?url=https://zerovermelhos.tiiny.site/&text=O%20Benfica%20n%C3%A3o%20v%C3%AA%20um%20vermelho%20na%20Primeira%20Liga%20h%C3%A1%20(n%C3%BAmero%20de%20dias)%20dias" target="_blank" class="twitter">
+      <img src="https://images.seeklogo.com/logo-png/49/2/twitter-x-logo-png_seeklogo-492396.png" alt="Twitter">
+    </a>
+  </div>
   <script>
-    (function() {
-      const lastRedCardDate = new Date("2023-08-14");
-      const today = new Date();
-      const diffTime = today.getTime() - lastRedCardDate.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      document.getElementById("daysCounter").textContent = diffDays;
-    })();
+(function() {
+  const lastRedCardDate = new Date("2023-08-14");
+  const today = new Date();
+  const diffTime = today.getTime() - lastRedCardDate.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById("daysCounter").textContent = diffDays;
+  const twitterShareLink = document.querySelector('.share-buttons a.twitter');
+  twitterShareLink.href = `https://twitter.com/intent/tweet?url=https://zerovermelhos.tiiny.site/&text=O%20Benfica%20n%C3%A3o%20v%C3%AA%20um%20vermelho%20na%20Primeira%20Liga%20h%C3%A1%20${diffDays}%20dias`;
+})();
   </script>
 </body>
 </html>
