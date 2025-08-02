@@ -1,0 +1,31 @@
+name: Update OG Title Daily
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Corre todos os dias à meia-noite UTC
+  workflow_dispatch:
+
+jobs:
+  update-og-title:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Update og:title with correct number of days
+        run: |
+          LAST_RED_CARD_DATE="2023-08-14"
+          TODAY=$(date +%s)
+          LAST_DATE=$(date -d "$LAST_RED_CARD_DATE" +%s)
+          DIFF_DAYS=$(( (TODAY - LAST_DATE) / 86400 ))
+
+          sed -i "s/<meta property=\"og:title\" content=\"Benfica não vê uma expulsão há .* dias!\" \\/>/<meta property=\"og:title\" content=\"Benfica não vê uma expulsão há $DIFF_DAYS dias!\" \\/>/" index.html
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Update og:title to $DIFF_DAYS days" || echo "No changes to commit"
+          git push
