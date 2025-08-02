@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -9,33 +10,9 @@
   <meta property="og:url" content="https://www.zerovermelhos.live" />
   <link rel="icon" type="image/png" href="https://www.iconpacks.net/icons/1/free-red-card-icon-460-thumb.png">
   <style>
-    body { 
-      position: relative; 
-      background: #ffe6e6 url('https://i.imgur.com/xPWtBlu.png') center center no-repeat; 
-      background-size: cover;
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: flex-start; 
-      padding-top: 2vh; 
-      height: 100vh; 
-      margin: 0; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      color: #800000; 
-      text-align: center; 
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(255, 255, 255, 0.85);
-      z-index: 0;
-    }
-    h1, .counter, .days-label, .last-expulsion, .stats, .share-buttons, .ultima-expulsao-label {
-      position: relative;
-      z-index: 1;
-    }
+    body { position: relative; background: #ffe6e6 url('https://i.imgur.com/xPWtBlu.png') center center no-repeat; background-size: cover; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 2vh; height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #800000; text-align: center; overflow-x: hidden;}
+    body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.85); z-index: 0;}
+    h1, .counter, .days-label, .last-expulsion, .stats, .share-buttons, .ultima-expulsao-label { position: relative; z-index: 1; }
     h1 { font-size: 3rem; margin-bottom: 4vh; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
     .counter { font-size: 12rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
     .days-label { font-size: 3.5rem; font-weight: bold; margin-top: -1rem; }
@@ -47,27 +24,10 @@
     .share-buttons { margin-top: 5vh; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
     .share-buttons a, .share-buttons button { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: #fff; text-decoration: none; border: none; cursor: pointer; }
     .share-buttons img { width: 32px; height: 32px; }
-
     @media (max-width: 768px) {
-      .share-buttons {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 0.5rem 0;
-        background-color: rgba(255, 255, 255, 0.9);
-        justify-content: space-around;
-        gap: 0;
-        z-index: 999;
-      }
-      .share-buttons a, .share-buttons button {
-        width: 80px;
-        height: 80px;
-      }
-      .share-buttons img {
-        width: 40px;
-        height: 40px;
-      }
+      .share-buttons { position: fixed; bottom: 0; left: 0; right: 0; padding: 0.5rem 0; background-color: rgba(255, 255, 255, 0.9); justify-content: space-around; gap: 0; z-index: 999; }
+      .share-buttons a, .share-buttons button { width: 80px; height: 80px; }
+      .share-buttons img { width: 40px; height: 40px; }
     }
   </style>
 </head>
@@ -98,13 +58,10 @@
   const diffTime = today.getTime() - lastRedCardDate.getTime();
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   document.getElementById("daysCounter").textContent = diffDays;
-
   const shareText = encodeURIComponent("Há quanto tempo o Benfica não vê uma expulsão na Liga? Contador live");
   const shareURL = encodeURIComponent("https://www.zerovermelhos.live");
-
   document.getElementById('whatsapp-share').href = `https://api.whatsapp.com/send?text=${shareText}%20${shareURL}`;
   document.getElementById('telegram-share').href = `https://t.me/share/url?url=${shareURL}&text=${shareText}`;
-
   document.getElementById('copyLinkBtn').addEventListener('click', () => {
     navigator.clipboard.writeText(`https://www.zerovermelhos.live`).then(() => {
       alert('Link copiado!');
