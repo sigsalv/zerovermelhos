@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Último Vermelho do Benfica</title>
-  <meta property="og:title" content="Benfica não vê uma expulsão há 719 dias!" />
+  <meta property="og:title" content="Benfica não vê uma expulsão há 718 dias!" />
   <meta property="og:description" content="Consulta em tempo real há quantos dias o Benfica não vê um vermelho na Liga." />
   <meta property="og:image" content="https://i.imgur.com/mikU0yZ.jpeg" />
   <meta property="og:url" content="https://sigsalv.github.io/zerovermelhos/" />
@@ -29,31 +29,37 @@
     .stats { font-size: 1.8rem; color: black; display: flex; flex-direction: column; gap: 0.3rem; }
     .sporting { color: green; font-weight: bold; }
     .porto { color: blue; font-weight: bold; }
-    .share-buttons { margin-top: 5vh; display: flex; gap: 1rem; }
-    .share-buttons a { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background-color: #1877F2; text-decoration: none; }
-    .share-buttons a.twitter { background-color: #000000; }
+    .share-buttons { margin-top: 5vh; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .share-buttons a { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background-color: rgba(0,0,0,0.05); text-decoration: none; transition: transform 0.2s; }
+    .share-buttons a:hover { transform: scale(1.1); }
     .share-buttons img { width: 24px; height: 24px; }
   </style>
 </head>
 <body>
   <h1><img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height: 1.5em; vertical-align: middle; margin-right: 0.5rem;"> O Benfica não vê uma expulsão na Primeira Liga há:</h1>
   <div style="display: flex; align-items: baseline; gap: 1rem;">
-    <div class="counter" id="daysCounter">719</div>
+    <div class="counter" id="daysCounter">718</div>
     <div class="days-label">dias</div>
   </div>
   <div style="font-size: 0.9rem; color: #800000; margin-top: 2rem;">Última expulsão:</div>
-<div class="last-expulsion">14 Agosto 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
+  <div class="last-expulsion">14 Agosto 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
   <div class="stats" style="margin-top: 5vh;">
     <div>No mesmo período:</div>
     <div class="sporting"><img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height: 1.5em; vertical-align: middle; margin-right: 0.3rem;"> O Sporting viu 10 vermelhos</div>
     <div class="porto"><img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height: 1.5em; vertical-align: middle; margin-right: 0.3rem;"> O Porto viu 13 vermelhos</div>
   </div>
   <div class="share-buttons">
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://sigsalv.github.io/zerovermelhos/" target="_blank">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.zerovermelhos.live" target="_blank" class="facebook">
       <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
     </a>
-    <a href="https://twitter.com/intent/tweet?url=https://sigsalv.github.io/zerovermelhos/" target="_blank" class="twitter">
+    <a href="#" target="_blank" class="twitter">
       <img src="https://images.seeklogo.com/logo-png/49/2/twitter-x-logo-png_seeklogo-492396.png" alt="Twitter">
+    </a>
+    <a href="#" target="_blank" class="whatsapp">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+    <a href="#" target="_blank" class="telegram">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
     </a>
   </div>
   <script>
@@ -63,8 +69,12 @@
   const diffTime = today.getTime() - lastRedCardDate.getTime();
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   document.getElementById("daysCounter").textContent = diffDays;
-  const twitterShareLink = document.querySelector('.share-buttons a.twitter');
-  twitterShareLink.href = `https://twitter.com/intent/tweet?url=https://www.zerovermelhos.live&text=O%20Benfica%20n%C3%A3o%20v%C3%AA%20um%20vermelho%20na%20Primeira%20Liga%20h%C3%A1%20${diffDays}%20dias`;
+  const diffDaysText = `O Benfica não vê um vermelho na Primeira Liga há ${diffDays} dias`;
+  const shareURL = `https://www.zerovermelhos.live`;
+
+  document.querySelector('.twitter').href = `https://twitter.com/intent/tweet?url=${shareURL}&text=${diffDaysText}`;
+  document.querySelector('.whatsapp').href = `https://api.whatsapp.com/send?text=${diffDaysText} ${shareURL}`;
+  document.querySelector('.telegram').href = `https://t.me/share/url?url=${shareURL}&text=${diffDaysText}`;
 })();
   </script>
 </body>
