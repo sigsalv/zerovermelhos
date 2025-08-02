@@ -29,7 +29,8 @@
     <div class="counter" id="daysCounter">718</div>
     <div class="days-label">dias</div>
   </div>
-  <div class="last-expulsion">14 Ago 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
+  <div style="font-size: 0.9rem; color: #800000; margin-top: 2rem;">Última expulsão:</div>
+<div class="last-expulsion">14 Agosto 2023 - Petar Musa - 51' (Boavista 3 - 2 Benfica)</div>
   <div class="stats" style="margin-top: 5vh;">
     <div>No mesmo período:</div>
     <div class="sporting"><img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height: 1.5em; vertical-align: middle; margin-right: 0.3rem;"> O Sporting viu 10 vermelhos</div>
@@ -51,7 +52,7 @@
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   document.getElementById("daysCounter").textContent = diffDays;
   const twitterShareLink = document.querySelector('.share-buttons a.twitter');
-  twitterShareLink.href = `https://twitter.com/intent/tweet?url=https://zerovermelhos.tiiny.site/&text=O%20Benfica%20n%C3%A3o%20v%C3%AA%20um%20vermelho%20na%20Primeira%20Liga%20h%C3%A1%20${diffDays}%20dias`;
+  twitterShareLink.href = `https://twitter.com/intent/tweet?url=https://www.zerovermelhos.live&text=O%20Benfica%20n%C3%A3o%20v%C3%AA%20um%20vermelho%20na%20Primeira%20Liga%20h%C3%A1%20${diffDays}%20dias`;
 })();
   </script>
 </body>
