@@ -1,8 +1,8 @@
-name: Update OG Title Daily
+name: Update OG Title Every 6 Hours
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Corre todos os dias à meia-noite UTC
+    - cron: '0 */6 * * *'  # Corre de 6 em 6 horas UTC
   workflow_dispatch:
 
 jobs:
