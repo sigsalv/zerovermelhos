@@ -157,6 +157,26 @@
   .dias{ font-size:1.6rem; }
   .dates{ font-size:.92rem; }
 }
+
+/* Corrigir scroll horizontal em mobile */
+.streaks-table-wrap {
+  overflow-x: hidden;   /* elimina scroll lateral */
+}
+.streaks .tbl {
+  table-layout: fixed;  /* força largura fixa e quebra */
+  width: 100%;
+}
+.streaks tbody td {
+  word-break: break-word;
+}
+.badges {
+  flex-wrap: nowrap;    /* mantém em linha */
+  gap: .4rem;
+}
+.badge img {
+  height: 1.2em;
+  width: auto;
+}
 </style>
 
 <style>
