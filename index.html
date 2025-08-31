@@ -105,7 +105,7 @@
       border: none;
       cursor: pointer;
     }
-    .share-buttons img {
+    .share-buttons img { max-width: 100%; max-height: 100%;
       width: 50%;
       height: 50%;
     }
@@ -213,7 +213,7 @@
     <a href="https://twitter.com/intent/tweet?url=https://www.zerovermelhos.live" target="_blank"><img src="https://images.seeklogo.com/logo-png/49/2/twitter-x-logo-png_seeklogo-492396.png" alt="Twitter"></a>
     <a href="https://api.whatsapp.com/send?text=" target="_blank" id="whatsapp-share"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp"></a>
     <a href="https://t.me/share/url?url=" target="_blank" id="telegram-share"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
-    <button id="copyLinkBtn" style="width:55%;height:55%;"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/copy-link-icon-svg-png-download-1797101.png" alt="Copy" style="width:55%;height:55%;"></button>
+    <button id="copyLinkBtn"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/copy-link-icon-svg-png-download-1797101.png" alt="Copy" style="width:55%;height:55%;"></button>
   </div>
   <script>
 (function() {
@@ -298,7 +298,7 @@
 
 <section class="streaks" aria-labelledby="streaks-title">
   <h3 id="streaks-title">Últimos streaks</h3>
-  <div class="streaks-table-wrap" style="overflow-x:auto">
+  <div class="streaks-table-wrap" style="overflow-x:hidden">
     <table class="tbl">
       <thead>
         <tr>
