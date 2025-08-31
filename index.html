@@ -118,7 +118,55 @@
   }
 }
 
-  </style>
+  
+/* Datas + número de dias na 1ª coluna */
+.diaswrap{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; font-size:.95rem; opacity:.9; }
+.dates .dots{ opacity:.5; letter-spacing:2px; }
+.dias{ font-size:2rem; font-weight:700; color:#6b0000; } /* mantém o tom do título principal */
+@media (max-width:640px){
+  .dias{ font-size:1.6rem; }
+  .dates{ font-size:.92rem; }
+}
+
+/* Ajustes pedidos */
+.diaswrap{ display:flex; align-items:baseline; justify-content:flex-start; gap:1.5rem; }
+.dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; font-size:.95rem; color:#000; opacity:.85; }
+.dates .dots{ opacity:.5; letter-spacing:2px; }
+.dias{ font-size:2rem; font-weight:700; color:#000; } 
+.streaks thead th{ color:#000; }
+.streaks h3{ color:#000; }
+@media (max-width:640px){
+  .dias{ font-size:1.6rem; }
+  .dates{ font-size:.92rem; }
+}
+
+/* Alinhamento vertical e cor preta uniforme */
+.diaswrap{ display:flex; align-items:center; justify-content:flex-start; gap:2rem; }
+.dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; font-size:.95rem; color:#000; opacity:.9; }
+.dates .dots{ opacity:.5; letter-spacing:2px; }
+.dias{ font-size:2rem; font-weight:700; color:#000; } 
+.streaks thead th{ color:#000; }
+.streaks h3{ color:#000; }
+.badge{ color:#000; } /* texto das badges em preto por defeito */
+.badge.scp{ color:#0a8f33; } /* Sporting verde */
+.badge.fcp{ color:#1565c0; } /* Porto azul */
+.count{ color:#000; } /* números em preto */
+.sep{ color:#000; }
+@media (max-width:640px){
+  .dias{ font-size:1.6rem; }
+  .dates{ font-size:.92rem; }
+}
+</style>
+
+<style>
+  /* Espaço de segurança para a barra de partilha fixa */
+  :root { --share-bar-height: 260px; } /* ajusta se necessário */
+  body { padding-bottom: calc(var(--share-bar-height) + 24px); }
+  /* Garante que a secção 'streaks' não fica escondida sob a barra */
+  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
+</style>
+
 </head>
 <body>
   <h1><img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height: 1.5em; vertical-align: middle; margin-right: 0.5rem;"> O Benfica não vê uma expulsão na Primeira Liga há:</h1>
@@ -127,7 +175,14 @@
     <div class="days-label">dias</div>
   </div>
   <div class="ultima-expulsao-label">Última expulsão:</div>
-  <div class="last-expulsion">6 Abril 2024 - Fredrik Aursnes - 98' (Sporting 2 - 1 Benfica)</div>
+  
+  <div class="last-expulsion">31 Agosto 2025 - Amar Dedić - 70' 
+    <img src="https://static.files.bbci.co.uk/core/website/assets/static/sport/football/second-yellow-card.face6badd0.svg" 
+         alt="Segundo Amarelo" 
+         style="height: 1.2em; vertical-align: middle; margin-left: 0.3rem;">
+    (Alverca 1 - 2 Benfica)
+  </div>
+
   <div class="stats">
     <div>Em igual período:</div>
     <div class="porto"><img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height: 1.2em; vertical-align: middle; margin-right: 0.3rem;"> O Porto viu 6 vermelhos</div>
@@ -138,11 +193,11 @@
     <a href="https://twitter.com/intent/tweet?url=https://www.zerovermelhos.live" target="_blank"><img src="https://images.seeklogo.com/logo-png/49/2/twitter-x-logo-png_seeklogo-492396.png" alt="Twitter"></a>
     <a href="https://api.whatsapp.com/send?text=" target="_blank" id="whatsapp-share"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp"></a>
     <a href="https://t.me/share/url?url=" target="_blank" id="telegram-share"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
-    <button id="copyLinkBtn"><img src="https://icon-library.com/images/website-link-icon-png/website-link-icon-png-7.jpg" alt="Copy"></button>
+    <button id="copyLinkBtn" style="width:55%;height:55%;"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/copy-link-icon-svg-png-download-1797101.png" alt="Copy" style="width:55%;height:55%;"></button>
   </div>
   <script>
 (function() {
-  const lastRedCardDate = new Date("2024-04-06");
+  const lastRedCardDate = new Date("2025-08-31");
   const today = new Date();
   const diffTime = today.getTime() - lastRedCardDate.getTime();
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -163,5 +218,106 @@
   });
 })();
   </script>
+
+<!-- ====== ÚLTIMOS STREAKS (bloco estático/manual) ====== -->
+<style>
+  :root { --share-bar-height: 260px; }
+  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
+  .streaks h3{
+    margin: 0 0 10px 0;
+    font-size: 1.05rem;
+    letter-spacing: .2px;
+    text-align: center;
+    opacity: .9;
+  }
+  .streaks .tbl{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .96rem;
+  }
+  .streaks thead th{
+    text-align: left;
+    padding: .65rem .5rem;
+    border-bottom: 1px solid rgba(0,0,0,.18);
+    font-weight: 600;
+    opacity: .9;
+  }
+  .streaks tbody td{
+    padding: .7rem .5rem;
+    border-bottom: 1px dashed rgba(0,0,0,.15);
+    vertical-align: middle;
+  }
+  .streaks .dias{
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+  .badges { display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap; }
+  .badge{
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-size: .92rem; font-weight: 600;
+    padding: .18rem .55rem; border-radius: 999px;
+    background: rgba(0,0,0,.06);
+  }
+  .badge::before{
+    content: ""; display: inline-block; width: .6rem; height: .6rem; border-radius: 50%;
+    background: currentColor;
+  }
+  .badge.scp{ color: #0a8f33; }
+  .badge.fcp{ color: #1565c0; }
+  .count{ font-size: 1.6rem; font-weight: 700; }
+  .sep{ opacity: .5; }
+  @media (max-width: 640px){
+    .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
+    .streaks thead th { font-size: .9rem; }
+    .streaks .dias { font-size: 1.7rem; }
+    .count { font-size: 1.4rem; }
+  }
+</style>
+
+
+<section class="streaks" aria-labelledby="streaks-title">
+  <h3 id="streaks-title">Últimos streaks</h3>
+  <div class="streaks-table-wrap" style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Dias sem o Benfica ver vermelhos</th>
+          <th>Vermelhos vistos pelos rivais em igual período</th>
+        </tr>
+      </thead>
+      <tbody id="streaks-body">
+        <!-- DUPLICAR ESTE BLOCO <tr> PARA NOVOS STREAKS -->
+        <tr>
+          <td>
+            <div class="diaswrap">
+              <div class="dates">
+                <div class="d1">06 Abr 2024</div>
+                <div class="dots">⋮</div>
+                <div class="d2">31 Ago 2025</div>
+              </div>
+              <div class="dias">512</div>
+            </div>
+          </td>
+          <td>
+            
+            <div class="badges">
+              <span class="badge scp"><img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" 
+                   alt="Sporting" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;"> <span class="count">8</span></span>
+              <span class="badge fcp"><img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" 
+                   alt="Porto" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;"> <span class="count">6</span></span>
+            </div>
+
+          </td>
+        </tr>
+        <!-- /DUPLICAR -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ====== /ÚLTIMOS STREAKS ====== -->
+
+<div aria-hidden="true" style="height:calc(var(--share-bar-height) + 40px)"></div>
 </body>
 </html>
