@@ -265,6 +265,31 @@ h1 { margin-bottom: 0.1vh; }
 .benfica-supremacia-link a { pointer-events: auto !important; }
 </style>
 
+
+<style>
+/* === Responsive mobile fixes (<= 640px) === */
+@media (max-width: 640px) {
+  html, body { overflow-x: hidden !important; }
+  .streaks { padding: 0.75rem !important; }
+  .streaks .tbl { width: 100% !important; }
+  
+  /* Dias block: keep dates readable and prevent per-letter stacking */
+  .diaswrap { display: grid !important; grid-template-columns: 1fr auto !important; gap: 0.6rem !important; align-items: center !important; }
+  .diaswrap .dates { min-width: 0 !important; width: 100% !important; white-space: normal !important; word-break: keep-all !important; }
+  .diaswrap .d1, .diaswrap .d2 { font-size: 1rem !important; line-height: 1.2 !important; }
+  .diaswrap .dots { display: none !important; } /* hide the vertical dots on mobile */
+  .dias { font-size: 3.2rem !important; font-weight: 700 !important; }
+  .dias .dias-label { font-size: 0.95rem !important; margin-top: -0.5rem !important; }
+  
+  /* Badges row spacing */
+  .streaks .metrics, .streaks .badges { gap: 0.5rem !important; }
+  
+  /* Ensure the extra link is visible and clickable */
+  .benfica-supremacia-link { position: relative !important; z-index: 9999 !important; }
+  .benfica-supremacia-link a { font-size: 1rem !important; }
+}
+</style>
+
 </head>
 <body>
   <h1><img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height: 1.5em; vertical-align: middle; margin-right: 0.5rem;"> O Benfica não vê uma expulsão na Primeira Liga há:</h1>
