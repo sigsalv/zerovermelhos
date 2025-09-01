@@ -177,6 +177,43 @@
   height: 1.2em;
   width: auto;
 }
+
+.dias {
+  display: flex;
+  align-items: center; /* centraliza verticalmente */
+  gap: 0.4rem;         /* espaçamento entre número e badge */
+}
+.dias .badge {
+  margin-top: 0;
+  vertical-align: middle;
+}
+
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.badges .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Forçar caixa semi-transparente e elementos internos sem fundo */
+.streaks {
+  background: rgba(255,255,255,0.75) !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.streaks .tbl,
+.streaks .tbl th,
+.streaks .tbl td,
+.streaks .streaks-table-wrap {
+  background: transparent !important;
+}
+
 </style>
 
 <style>
@@ -184,7 +221,7 @@
   :root { --share-bar-height: 260px; } /* ajusta se necessário */
   body { padding-bottom: calc(var(--share-bar-height) + 24px); }
   /* Garante que a secção 'streaks' não fica escondida sob a barra */
-  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
+  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.8) !important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
 </style>
 
 </head>
@@ -242,7 +279,7 @@
 <!-- ====== ÚLTIMOS STREAKS (bloco estático/manual) ====== -->
 <style>
   :root { --share-bar-height: 260px; }
-  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
+  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.8) !important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
   .streaks h3{
     margin: 0 0 10px 0;
     font-size: 1.05rem;
@@ -285,10 +322,11 @@
   }
   .badge.scp{ color: #0a8f33; }
   .badge.fcp{ color: #1565c0; }
+.badge.slb{ color: #d40000; } /* Benfica vermelho */
   .count{ font-size: 1.6rem; font-weight: 700; }
   .sep{ opacity: .5; }
   @media (max-width: 640px){
-    .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
+    .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.8) !important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
     .streaks thead th { font-size: .9rem; }
     .streaks .dias { font-size: 1.7rem; }
     .count { font-size: 1.4rem; }
@@ -302,7 +340,7 @@
     <table class="tbl">
       <thead>
         <tr>
-          <th>Dias sem o Benfica ver vermelhos</th>
+          <th>Tempo consecutivo que o Benfica esteve sem ver um vermelho</th>
           <th>Vermelhos vistos pelos rivais em igual período</th>
         </tr>
       </thead>
@@ -316,7 +354,16 @@
                 <div class="dots">⋮</div>
                 <div class="d2">31 Ago 2025</div>
               </div>
-              <div class="dias">512</div>
+              
+<div class="dias">
+  512 <span class="dias-label" style="font-size:0.9rem;margin-left:0.2rem;">dias</span>
+  <span class="badge slb" style="margin-left:0.8rem;">
+    <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" 
+         alt="Benfica" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;">
+    <span class="count">0</span>
+  </span>
+</div>
+
             </div>
           </td>
           <td>
