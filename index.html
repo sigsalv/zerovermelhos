@@ -10,6 +10,8 @@
   <meta property="og:url" content="https://www.zerovermelhos.live" />
   <link rel="icon" type="image/png" href="https://www.iconpacks.net/icons/1/free-red-card-icon-460-thumb.png">
   <style>
+    :root { --share-bar-height: 260px; }
+
     body {
       position: relative;
       background: #ffe6e6 url('https://i.imgur.com/xPWtBlu.png') center center no-repeat;
@@ -19,505 +21,230 @@
       align-items: center;
       justify-content: flex-start;
       padding-top: 1vh;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #800000;
       text-align: center;
       overflow-x: hidden;
+      padding-bottom: calc(var(--share-bar-height) + 24px);
     }
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(255, 255, 255, 0.85);
-      z-index: 0;
+    body::before { content: ""; position: absolute; inset: 0; background-color: rgba(255, 255, 255, 0.85); z-index: 0; }
+    h1, .counter, .days-label, .last-expulsion, .stats, .share-buttons, .ultima-expulsao-label, .streaks, .benfica-supremacia-link { position: relative; z-index: 1; }
+
+    h1 { font-size: 1.5rem; margin: .35rem 12px 0; }
+    .counter { font-size: clamp(2rem, 14.5vw, 8rem); font-weight: 800; line-height: 1; }
+    .days-label { font-size: clamp(0.9rem, 1.8vw, 1.6rem); font-weight: 700; margin-left: 0.25rem; }
+    .ultima-expulsao-label { font-size: 0.8rem; color: #000; font-weight: 700; }
+    .last-expulsion { font-size: 1.05rem; color: #4d0000; background-color: rgba(255,255,255,0.5); padding: 0.5rem 1rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 0 12px; }
+
+    .stats { font-size: 1.05rem; color: #000; display: flex; flex-direction: column; gap: 0.4rem; margin-top: 2vh; }
+    .sporting { color: green; font-weight: 700; }
+    .porto { color: blue; font-weight: 700; }
+
+    .share-buttons { position: fixed; bottom: 0; left: 0; right: 0; padding: 0.5rem 0; background-color: rgba(255, 255, 255, 0.95); display: flex; justify-content: space-around; gap: 0; z-index: 999; }
+    .share-buttons a, .share-buttons button { display: inline-flex; align-items: center; justify-content: center; width: 15vw; height: 15vw; min-width: 60px; min-height: 60px; max-width: 90px; max-height: 90px; border-radius: 50%; background-color: #fff; text-decoration: none; border: none; cursor: pointer; }
+    .share-buttons img { max-width: 100%; max-height: 100%; width: 50%; height: 50%; }
+
+    .streaks { width:100%; max-width:960px; margin:28px auto calc(var(--share-bar-height) + 64px); padding:16px 20px; background:rgba(255,255,255,.65); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border-radius:14px; }
+    .streaks h3{ margin:0 0 10px 0; font-size: 1.05rem; letter-spacing:.2px; text-align:center; opacity:.9; color:#000; }
+    .streaks .tbl{ width:100%; border-collapse:collapse; font-size:.96rem; }
+    .streaks tbody td{ padding:.7rem .5rem; border-bottom:1px dashed rgba(0,0,0,.15); vertical-align: middle; word-wrap: break-word; }
+    .diaswrap{ display:flex; align-items:center; justify-content:space-between; gap:1rem; min-width:0; }
+    .dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.2rem; font-size:.95rem; color:#000; opacity:.9; min-width: 0; }
+    .dots{ opacity:.5; letter-spacing:2px; }
+    .dias{ display:flex; align-items:center; gap:.45rem; font-size:2.2rem; font-weight:800; color:#000; line-height:1.1; min-width:0; }
+    .badge{ display:inline-flex; align-items:center; gap:.35rem; font-size:.9rem; font-weight:700; padding:.14rem .5rem; border-radius:999px; background:rgba(0,0,0,.06); color:#000; }
+    .badge.scp{ color:#0a8f33; } .badge.fcp{ color:#1565c0; } .badge.slb{ color:#d40000; }
+    .badge img{ height:1.2em; width:auto; }
+    .count{ font-size:1.5rem; font-weight:800; }
+    .rivals-legend{ display:none; font-size:.9rem; color:#333; margin-bottom:.25rem; text-align:left; }
+
+    .benfica-supremacia-link { text-align:center; margin:1rem auto 0.5rem; max-width:960px; padding: 0 12px; }
+    .benfica-supremacia-link a { display:inline-block; font-weight:700; color:#800000; text-decoration:none; }
+
+    /* ===== Mobile (<= 640px) ===== */
+    @media (max-width: 640px) {
+      .counter { font-size: 16.5vw; }
+      .last-expulsion { font-size: .95rem; }
+      .stats { font-size: 0.95rem; }
+
+      /* Cartões -> estrutura estável */
+      .streaks { padding: 12px; margin: 20px 12px calc(var(--share-bar-height) + 48px); }
+      .streaks .tbl { display:block; }
+      .streaks tbody, .streaks tr, .streaks td { display:block; width:100%; }
+      .streaks tr { margin: 12px 0; padding: 12px; border:1px solid rgba(0,0,0,.12); border-radius:12px; background: rgba(255,255,255,.6); }
+      .streaks td { border:0; padding:.5rem 0 !important; }
+
+      /* SOLUÇÃO ROBUSTA: empilhar o bloco dos dias numa nova linha */
+      .diaswrap{ display:grid; grid-template-columns: 1fr; grid-template-rows: auto auto; gap:.45rem; align-items:start; }
+      .dates{ order:1; }
+      .dias{ order:2; justify-self:start; font-size: clamp(1.8rem, 8.6vw, 2.2rem); }
+      .badge.slb{ transform: none; } /* já não é necessário reduzir */
+      .dias .dias-label{ font-size:.9rem; }
+
+      /* Legenda + badges coluna */
+      .rivals-legend{ display:block; padding-top:.25rem; }
+      .badges-row{ display:flex; flex-direction:column; align-items:flex-start; gap:.5rem; }
+
+      /* Link com respiro lateral */
+      .benfica-supremacia-link{ padding: 0 16px; }
     }
-    h1, .counter, .days-label, .last-expulsion, .stats, .share-buttons, .ultima-expulsao-label { margin-top: 0.35rem; 
-      position: relative;
-      z-index: 1;
-    }
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 0.1vh;
-      
-    }
-    .counter {
-      font-size:  14.45vw;
-      font-weight: bold;
-      
-    }
-    .days-label {
-      font-size: 4vw;
-      font-weight: bold;
-      margin-top: -1rem;
-    }
-    .ultima-expulsao-label {
-      font-size: 0.7rem;
-      color: black;
-      margin-top: 0.35rem;
-      font-weight: bold;
-    }
-    .last-expulsion {
-      margin-top: 0.35rem;
-      font-size: 1.3rem;
-      color: #4d0000;
-      background-color: rgba(255,255,255,0.5);
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .stats {
-      font-size: 1.2rem;
-      color: black;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 3vh;
-    }
-    .sporting { color: green; font-weight: bold; }
-    .porto { color: blue; font-weight: bold; }
-    .share-buttons {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0.5rem 0;
-      background-color: rgba(255, 255, 255, 0.95);
-      display: flex;
-      justify-content: space-around;
-      gap: 0;
-      z-index: 999;
-    }
-    .share-buttons a, .share-buttons button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 15vw;
-      height: 15vw;
-      min-width: 60px;
-      min-height: 60px;
-      max-width: 90px;
-      max-height: 90px;
-      border-radius: 50%;
-      background-color: #fff;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-    }
-    .share-buttons img { max-width: 100%; max-height: 100%;
-      width: 50%;
-      height: 50%;
-    }
-    @media (max-width: 768px) {
-  .counter {
-    font-size:  21.25vw;
-  }
-  h1 { margin-bottom: 0.1vh; 
-    font-size: 1.2rem;
-  }
-}
-
-  
-/* Datas + número de dias na 1ª coluna */
-.diaswrap{ margin-top: -0.5rem;  display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-.dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; font-size:.95rem; opacity:.9; }
-.dates .dots{ opacity:.5; letter-spacing:2px; }
-.dias{ font-size:2rem; font-weight:700; color:#6b0000; } /* mantém o tom do título principal */
-@media (max-width:640px){
-  .dias{ font-size:1.6rem; }
-  .dates{ font-size:.92rem; }
-}
-
-/* Ajustes pedidos */
-.diaswrap{ margin-top: -0.5rem;  display:flex; align-items:baseline; justify-content:flex-start; gap:1.5rem; }
-.dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; font-size:.95rem; color:#000; opacity:.85; }
-.dates .dots{ opacity:.5; letter-spacing:2px; }
-.dias{ font-size:2rem; font-weight:700; color:#000; } 
-.streaks thead th{ color:#000; }
-.streaks h3{ color:#000; }
-@media (max-width:640px){
-  .dias{ font-size:1.6rem; }
-  .dates{ font-size:.92rem; }
-}
-
-/* Alinhamento vertical e cor preta uniforme */
-.diaswrap{ margin-top: -0.5rem;  display:flex; align-items:center; justify-content:flex-start; gap:2rem; }
-.dates{ display:flex; flex-direction:column; align-items:flex-start; gap:.25rem; font-size:.95rem; color:#000; opacity:.9; }
-.dates .dots{ opacity:.5; letter-spacing:2px; }
-.dias{ font-size:2rem; font-weight:700; color:#000; } 
-.streaks thead th{ color:#000; }
-.streaks h3{ color:#000; }
-.badge{ color:#000; } /* texto das badges em preto por defeito */
-.badge.scp{ color:#0a8f33; } /* Sporting verde */
-.badge.fcp{ color:#1565c0; } /* Porto azul */
-.count{ color:#000; } /* números em preto */
-.sep{ color:#000; }
-@media (max-width:640px){
-  .dias{ font-size:1.6rem; }
-  .dates{ font-size:.92rem; }
-}
-
-/* Corrigir scroll horizontal em mobile */
-.streaks-table-wrap {
-  overflow-x: hidden;   /* elimina scroll lateral */
-}
-.streaks .tbl {
-  table-layout: fixed;  /* força largura fixa e quebra */
-  width: 100%;
-}
-.streaks tbody td {
-  word-break: break-word;
-}
-.badges {
-  flex-wrap: nowrap;    /* mantém em linha */
-  gap: .4rem;
-}
-.badge img {
-  height: 1.2em;
-  width: auto;
-}
-
-.streaks .dias {
-  font-size: 3rem !important;
-  font-weight: 700;
-}
-
-
-/* Garantir número grande e alinhamento do "dias" + badge */
-.streaks .dias{
-  display:inline-flex !important;
-  align-items:center;
-  gap:.5rem;
-  font-size:3rem !important;
-  font-weight:700;
-  line-height:1.1;
-}
-.streaks .dias .dias-label{ margin-left: 0.15rem;  margin-top: -1.6rem;  font-size:.95rem !important; }
-.streaks .dias .badge.slb{ margin-left:.6rem !important; }
-
-
-/* Evitar que a caixa streaks fique atrás da barra das redes sociais */
-.streaks {
-  margin-bottom: calc(var(--share-bar-height) + 120px) !important;
-}
-
-
-/* Alinhar bolinha do Benfica igual às outras */
-.badge.slb::before {
-  content: ""; display: inline-block; width: .6rem; height: .6rem; border-radius: 50%;
-  background: #d40000; /* Benfica red */
-}
-
-/* Garantir caixa streaks acima da barra social */
-:root { --share-bar-height: 260px; }
-body { padding-bottom: calc(var(--share-bar-height) + 140px) !important; }
-.streaks { margin-bottom: calc(var(--share-bar-height) + 140px) !important; }
-
-
-/* Compactar secção das datas + épocas + pontos */
-.dates .d1, .dates .d2 {
-  margin: 0 !important;
-  line-height: 1.2;
-}
-
-.dots {
-  gap: 2px !important;
-}
-
-.dots span {
-  line-height: 1;
-}
-
-.dates span[style*="("] {
-  font-size: 0.7rem !important;
-}
-
-
-/* Extra spacing between streaks box and social share bar */
-:root { --share-bar-height: 260px; }
-body { padding-bottom: calc(var(--share-bar-height) + 160px) !important; }
-.streaks { margin-bottom: calc(var(--share-bar-height) + 160px) !important; }
-
-
-/* Reduzir espaço entre o título principal e o número de dias */
-h1 { margin-bottom: 0.1vh; }
-.counter { margin-top: 0 !important; padding-top: 0 !important; }
-
-
-/* Reduzir ainda mais o espaço entre o título e o contador */
-h1 { margin-bottom: 0.1vh; }
-.counter { margin-top: -10px !important; padding-top: 0 !important; }
-
-</style>
-
-<style>
-  /* Espaço de segurança para a barra de partilha fixa */
-  :root { --share-bar-height: 260px; } /* ajusta se necessário */
-  body { padding-bottom: calc(var(--share-bar-height) + 24px); }
-  /* Garante que a secção 'streaks' não fica escondida sob a barra */
-  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
-</style>
-
-
-<style>
-.benfica-supremacia-link { position: relative !important; z-index: 9999 !important; pointer-events: auto !important; }
-.benfica-supremacia-link a { pointer-events: auto !important; }
-</style>
-
-
-<style>
-/* === Responsive mobile fixes (<= 640px) === */
-@media (max-width: 640px) {
-  html, body { overflow-x: hidden !important; }
-  .streaks { padding: 0.75rem !important; }
-  .streaks .tbl { width: 100% !important; }
-  
-  /* Dias block: keep dates readable and prevent per-letter stacking */
-  .diaswrap { display: grid !important; grid-template-columns: 1fr auto !important; gap: 0.6rem !important; align-items: center !important; }
-  .diaswrap .dates { min-width: 0 !important; width: 100% !important; white-space: normal !important; word-break: keep-all !important; }
-  .diaswrap .d1, .diaswrap .d2 { font-size: 1rem !important; line-height: 1.2 !important; }
-  .diaswrap .dots { display: none !important; } /* hide the vertical dots on mobile */
-  .dias { font-size: 3.2rem !important; font-weight: 700 !important; }
-  .dias .dias-label { font-size: 0.95rem !important; margin-top: -0.5rem !important; }
-  
-  /* Badges row spacing */
-  .streaks .metrics, .streaks .badges { gap: 0.5rem !important; }
-  
-  /* Ensure the extra link is visible and clickable */
-  .benfica-supremacia-link { position: relative !important; z-index: 9999 !important; }
-  .benfica-supremacia-link a { font-size: 1rem !important; }
-}
-</style>
-
+  </style>
 </head>
 <body>
-  <h1><img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height: 1.5em; vertical-align: middle; margin-right: 0.5rem;"> O Benfica não vê uma expulsão na Primeira Liga há:</h1>
+  <h1>
+    <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height: 1.5em; vertical-align: middle; margin-right: 0.5rem;">
+    O Benfica não vê uma expulsão na Primeira Liga há:
+  </h1>
+
   <div style="display: flex; align-items: baseline; gap: 0.5rem;">
     <div class="counter" id="daysCounter">X</div>
     <div class="days-label">dias</div>
   </div>
+
   <div class="ultima-expulsao-label">Última expulsão:</div>
-  
-  <div class="last-expulsion">31 Agosto 2025 - Amar Dedić - 70' 
-    <img src="https://static.files.bbci.co.uk/core/website/assets/static/sport/football/second-yellow-card.face6badd0.svg" 
-         alt="Segundo Amarelo" 
-         style="height: 1.2em; vertical-align: middle; margin-left: 0.3rem;">
+  <div class="last-expulsion">
+    31 Agosto 2025 - Amar Dedić - 70' 
+    <img src="https://static.files.bbci.co.uk/core/website/assets/static/sport/football/second-yellow-card.face6badd0.svg" alt="Segundo Amarelo" style="height: 1.2em; vertical-align: middle; margin-left: 0.3rem;">
     (Alverca 1 - 2 Benfica)
   </div>
 
   <div class="stats">
     <div>Em igual período:</div>
-    <div class="porto"><img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height: 1.2em; vertical-align: middle; margin-right: 0.3rem;"> O Porto viu 0 vermelhos</div>
-    <div class="sporting"><img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height: 1.2em; vertical-align: middle; margin-right: 0.3rem;"> O Sporting viu 0 vermelhos</div>
+    <div class="porto">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height: 1.2em; vertical-align: middle; margin-right: 0.3rem;">
+      O Porto viu 0 vermelhos
+    </div>
+    <div class="sporting">
+      <img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height: 1.2em; vertical-align: middle; margin-right: 0.3rem;">
+      O Sporting viu 0 vermelhos
+    </div>
   </div>
-  <div class="share-buttons">
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.zerovermelhos.live" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook"></a>
-    <a href="https://twitter.com/intent/tweet?url=https://www.zerovermelhos.live" target="_blank"><img src="https://images.seeklogo.com/logo-png/49/2/twitter-x-logo-png_seeklogo-492396.png" alt="Twitter"></a>
-    <a href="https://api.whatsapp.com/send?text=" target="_blank" id="whatsapp-share"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp"></a>
-    <a href="https://t.me/share/url?url=" target="_blank" id="telegram-share"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
-    <button id="copyLinkBtn"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/copy-link-icon-svg-png-download-1797101.png" alt="Copy" style="width:55%;height:55%;"></button>
-  </div>
-  <script>
-(function() {
-  const lastRedCardDate = new Date("2025-08-31");
-  const today = new Date();
-  const diffTime = today.getTime() - lastRedCardDate.getTime();
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  document.getElementById("daysCounter").textContent = diffDays;
 
-  const shareText = encodeURIComponent("Há quanto tempo o Benfica não vê uma expulsão na Liga? Contador live");
-  const shareURL = encodeURIComponent("https://www.zerovermelhos.live");
-
-  document.getElementById('whatsapp-share').href = `https://api.whatsapp.com/send?text=${shareText}%20${shareURL}`;
-  document.getElementById('telegram-share').href = `https://t.me/share/url?url=${shareURL}&text=${shareText}`;
-
-  document.getElementById('copyLinkBtn').addEventListener('click', () => {
-    navigator.clipboard.writeText(`https://www.zerovermelhos.live`).then(() => {
-      alert('Link copiado!');
-    }).catch(err => {
-      alert('Erro ao copiar link.');
-    });
-  });
-})();
-  </script>
-
-<!-- ====== ÚLTIMOS STREAKS (bloco estático/manual) ====== -->
-<style>
-  :root { --share-bar-height: 260px; }
-  .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
-  .streaks h3{
-    margin: 0 0 10px 0;
-    font-size: 1.05rem;
-    letter-spacing: .2px;
-    text-align: center;
-    opacity: .9;
-  }
-  .streaks .tbl{
-    width: 100%;
-    border-collapse: collapse;
-    font-size: .96rem;
-  }
-  .streaks thead th{
-    text-align: left;
-    padding: .65rem .5rem;
-    border-bottom: 1px solid rgba(0,0,0,.18);
-    font-weight: 600;
-    opacity: .9;
-  }
-  .streaks tbody td{
-    padding: .7rem .5rem;
-    border-bottom: 1px dashed rgba(0,0,0,.15);
-    vertical-align: middle;
-  }
-  .streaks .dias{
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: .5px;
-  }
-  .badges { display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap; }
-  .badge{
-    display: inline-flex; align-items: center; gap: .45rem;
-    font-size: .92rem; font-weight: 600;
-    padding: .18rem .55rem; border-radius: 999px;
-    background: rgba(0,0,0,.06);
-  }
-  .badge::before{
-    content: ""; display: inline-block; width: .6rem; height: .6rem; border-radius: 50%;
-    background: currentColor;
-  }
-  .badge.scp{ color: #0a8f33; }
-  .badge.fcp{ color: #1565c0; }
-  .count{ font-size: 1.6rem; font-weight: 700; }
-  .sep{ opacity: .5; }
-  @media (max-width: 640px){
-    .streaks { width:100%;max-width:960px;margin:56px auto calc(var(--share-bar-height) + 64px);padding:16px 20px;background:rgba(255,255,255,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:14px;position:relative;z-index:1; }
-    .streaks thead th { font-size: .9rem; }
-    .streaks .dias { font-size: 1.7rem; }
-    .count { font-size: 1.4rem; }
-  }
-</style>
-
-
-<section class="streaks" aria-labelledby="streaks-title">
-  <h3 id="streaks-title">Últimos streaks 🔥</h3>
-  <div class="streaks-table-wrap" style="overflow-x:hidden">
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>Tempo consecutivo que o Benfica esteve sem ver um vermelho</th>
-          <th>Vermelhos vistos pelos rivais em igual período</th>
-        </tr>
-      </thead>
-      <tbody id="streaks-body">
-        <!-- DUPLICAR ESTE BLOCO <tr> PARA NOVOS STREAKS -->
-        <tr>
-          <td>
-            <div class="diaswrap">
-              <div class="dates">
-                <div class="d1">31 Ago 2025 (25/26)</div>
-                
-<div class="dots" style="display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.6;">
-  <span>⋮</span>
-  <span style="font-size:0.85rem;opacity:0.85;">(24/25)</span>
-  <span>⋮</span>
-</div>
-
-                <div class="d2">06 Abr 2024 (23/24)</div>
-              </div>
-              
-<div class="dias">
-  512 <span class="dias-label" style="font-size:0.95rem;margin-left:0.25rem;">dias</span>
-  <span class="badge slb" style="margin-left:0.8rem; color:#d40000;">
-    <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" 
-         alt="Benfica" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;">
-    <span class="count">0</span>
-  </span>
-</div>
-
-            </div>
-          </td>
-          <td>
-            
-            <div class="badges">
-              <span class="badge scp"><img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" 
-                   alt="Sporting" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;"> <span class="count">8</span></span>
-              <span class="badge fcp"><img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" 
-                   alt="Porto" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;"> <span class="count">6</span></span>
-            </div>
-
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <div class="diaswrap">
-              <div class="dates">
-                <div class="d1">07 Ago 2021 (21/22)</div>
-                <div class="dots" style="display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.6;">
-                  <span>⋮</span>
-                  <span style="font-size:0.85rem;opacity:0.85;">(20/21)</span>
-                  <span>⋮</span>
+  <section class="streaks" aria-labelledby="streaks-title">
+    <h3 id="streaks-title">Últimos streaks 🔥</h3>
+    <div class="streaks-table-wrap">
+      <table class="tbl">
+        <tbody>
+          <tr>
+            <td>
+              <div class="diaswrap">
+                <div class="dates">
+                  <div class="d1">31 Ago 2025 (25/26)</div>
+                  <div class="dots">⋮ (24/25) ⋮</div>
+                  <div class="d2">06 Abr 2024 (23/24)</div>
                 </div>
-                <div class="d2">30 Nov 2019 (19/20)</div>
+                <div class="dias">
+                  512 <span class="dias-label">dias</span>
+                  <span class="badge slb">
+                    <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height:1.2em;vertical-align:middle;margin-right:0.25rem;">
+                    <span class="count">0</span>
+                  </span>
+                </div>
               </div>
-              <div class="dias">
-                616 <span class="dias-label" style="font-size:0.95rem;margin-left:0.25rem;">dias</span>
-                <span class="badge slb" style="margin-left:0.8rem; color:#d40000;">
-                  <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" 
-                       alt="Benfica" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;">
-                  <span class="count">0</span>
-                </span>
+            </td>
+            <td>
+              <div class="badges-row">
+                <div class="rivals-legend">Vermelhos aos adversários no mesmo período</div>
+                <div class="badges">
+                  <span class="badge scp">
+                    <img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height:1.2em;vertical-align:middle;margin-right:0.3rem;">
+                    <span class="count">8</span>
+                  </span>
+                  <span class="badge fcp">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height:1.2em;vertical-align:middle;margin-right:0.3rem;">
+                    <span class="count">6</span>
+                  </span>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="badges">
-              <span class="badge scp">
-                <img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" 
-                     alt="Sporting" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;">
-                <span class="count">4</span>
-              </span>
-              <span class="badge fcp">
-                <img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" 
-                     alt="Porto" style="height:1.3em;vertical-align:middle;margin-right:0.3rem;">
-                <span class="count">6</span>
-              </span>
-            </div>
-          </td>
-        </tr>
-        <!-- /DUPLICAR -->
-      </tbody>
-    </table>
-  
-<div class="benfica-supremacia-link" style="position:relative; z-index:10; pointer-events:auto; text-align:center; margin:1rem 0 0.5rem;">
-  <a href="https://www.espn.com.br/futebol/estatisticas/_/liga/POR.1/temporada/2024/vista/cartoes/ordenar/pontos/dir/sobe"
-     target="_blank"
-     style="display:inline-block; font-weight:700; color:#800000; text-decoration:none;">
-    👉 Confere aqui a "supremacia" disciplinar do Benfica, época a época! 👈
-  </a>
-</div>
-</div>
-</section>
+            </td>
+          </tr>
 
-<!-- ====== /ÚLTIMOS STREAKS ====== -->
+          <tr>
+            <td>
+              <div class="diaswrap">
+                <div class="dates">
+                  <div class="d1">07 Ago 2021 (21/22)</div>
+                  <div class="dots">⋮ (20/21) ⋮</div>
+                  <div class="d2">30 Nov 2019 (19/20)</div>
+                </div>
+                <div class="dias">
+                  616 <span class="dias-label">dias</span>
+                  <span class="badge slb">
+                    <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/d/de/Sport_Lisboa_e_Benfica.svg/640px-Sport_Lisboa_e_Benfica.svg.png" alt="Benfica" style="height:1.2em;vertical-align:middle;margin-right:0.25rem;">
+                    <span class="count">0</span>
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="badges-row">
+                <div class="rivals-legend">Vermelhos aos adversários no mesmo período</div>
+                <div class="badges">
+                  <span class="badge scp">
+                    <img src="https://upload.wikimedia.org/wikipedia/pt/3/3e/Sporting_Clube_de_Portugal.png" alt="Sporting" style="height:1.2em;vertical-align:middle;margin-right:0.3rem;">
+                    <span class="count">4</span>
+                  </span>
+                  <span class="badge fcp">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg" alt="Porto" style="height:1.2em;vertical-align:middle;margin-right:0.3rem;">
+                    <span class="count">6</span>
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-<div aria-hidden="true" style="height:calc(var(--share-bar-height) + 40px)"></div>
+      <div class="benfica-supremacia-link">
+        <a href="https://www.espn.com.br/futebol/estatisticas/_/liga/POR.1/temporada/2024/vista/cartoes/ordenar/pontos/dir/sobe" target="_blank">
+          👉 Confere aqui a "supremacia" disciplinar do Benfica, época a época! 👈
+        </a>
+      </div>
+    </div>
+  </section>
 
-<style>
-/* Terminal compact settings (definitive) */
-h1 { margin-bottom: 0.1vh !important; }
-.diaswrap { margin-top: -0.5rem !important; }
-.dias .dias-label { margin-top: -1.6rem !important; margin-left: 0.15rem !important; }
-.ultima-expulsao-label, .last-expulsion { margin-top: 0.35rem !important; text-shadow: none !important; }
-</style>
+  <div aria-hidden="true" style="height:calc(var(--share-bar-height) + 40px)"></div>
 
+  <div class="share-buttons">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.zerovermelhos.live" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+    </a>
+    <a href="https://twitter.com/intent/tweet?url=https://www.zerovermelhos.live" target="_blank">
+      <img src="https://images.seeklogo.com/logo-png/49/2/twitter-x-logo-png_seeklogo-492396.png" alt="Twitter">
+    </a>
+    <a href="https://api.whatsapp.com/send?text=" target="_blank" id="whatsapp-share">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp">
+    </a>
+    <a href="https://t.me/share/url?url=" target="_blank" id="telegram-share">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </a>
+    <button id="copyLinkBtn">
+      <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/copy-link-icon-svg-png-download-1797101.png" alt="Copy" style="width:55%;height:55%;">
+    </button>
+  </div>
 
-<style>
-/* FINAL FIX: number big, label small */
-.counter { font-size: 18vw !important; font-weight: 800 !important; line-height: 1 !important; }
-.days-label { font-size: clamp(0.9rem, 1.8vw, 1.6rem) !important; font-weight: 700 !important; margin-left: 0.25rem !important; margin-top: -0.4rem !important; }
-</style>
+  <script>
+  (function() {
+    const lastRedCardDate = new Date("2025-08-31");
+    const today = new Date();
+    const diffTime = today.getTime() - lastRedCardDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("daysCounter").textContent = diffDays;
 
+    const shareText = encodeURIComponent("Há quanto tempo o Benfica não vê uma expulsão na Liga? Contador live");
+    const shareURL = encodeURIComponent("https://www.zerovermelhos.live");
+
+    document.getElementById('whatsapp-share').href = `https://api.whatsapp.com/send?text=${shareText}%20${shareURL}`;
+    document.getElementById('telegram-share').href = `https://t.me/share/url?url=${shareURL}&text=${shareText}`;
+
+    document.getElementById('copyLinkBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(`https://www.zerovermelhos.live`).then(() => {
+        alert('Link copiado!');
+      }).catch(() => alert('Erro ao copiar link.'));
+    });
+  })();
+  </script>
 </body>
 </html>
