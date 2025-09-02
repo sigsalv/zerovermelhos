@@ -58,37 +58,26 @@
     .badge.scp{ color:#0a8f33; } .badge.fcp{ color:#1565c0; } .badge.slb{ color:#d40000; }
     .badge img{ height:1.2em; width:auto; }
     .count{ font-size:1.5rem; font-weight:800; }
-    .rivals-legend{ display:none; font-size:.9rem; color:#333; margin-bottom:.25rem; text-align:left; }
+    .rivals-legend{ display:block; font-size:.9rem; color:#333; margin-bottom:.25rem; text-align:center; }
 
     .benfica-supremacia-link { text-align:center; margin:1rem auto 0.5rem; max-width:960px; padding: 0 12px; }
     .benfica-supremacia-link a { display:inline-block; font-weight:700; color:#800000; text-decoration:none; }
 
-    /* ===== Mobile (<= 640px) ===== */
     @media (max-width: 640px) {
       .counter { font-size: 16.5vw; }
       .last-expulsion { font-size: .95rem; }
       .stats { font-size: 0.95rem; }
 
-      /* Cartões -> estrutura estável */
       .streaks { padding: 12px; margin: 20px 12px calc(var(--share-bar-height) + 48px); }
       .streaks .tbl { display:block; }
       .streaks tbody, .streaks tr, .streaks td { display:block; width:100%; }
       .streaks tr { margin: 12px 0; padding: 12px; border:1px solid rgba(0,0,0,.12); border-radius:12px; background: rgba(255,255,255,.6); }
       .streaks td { border:0; padding:.5rem 0 !important; }
 
-      /* SOLUÇÃO ROBUSTA: empilhar o bloco dos dias numa nova linha */
       .diaswrap{ display:grid; grid-template-columns: 1fr; grid-template-rows: auto auto; gap:.45rem; align-items:start; }
       .dates{ order:1; }
       .dias{ order:2; justify-self:start; font-size: clamp(1.8rem, 8.6vw, 2.2rem); }
-      .badge.slb{ transform: none; } /* já não é necessário reduzir */
       .dias .dias-label{ font-size:.9rem; }
-
-      /* Legenda + badges coluna */
-      .rivals-legend{ display:block; padding-top:.25rem; }
-      .badges-row{ display:flex; flex-direction:column; align-items:flex-start; gap:.5rem; }
-
-      /* Link com respiro lateral */
-      .benfica-supremacia-link{ padding: 0 16px; }
     }
   </style>
 </head>
