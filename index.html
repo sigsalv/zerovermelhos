@@ -216,13 +216,24 @@
 
   <script>
   (function() {
-    const lastRedCardDate = new Date("2025-08-31");
-    const today = new Date();
-    const diffTime = today.getTime() - lastRedCardDate.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    document.getElementById("daysCounter").textContent = diffDays;
+    const LAST_RED_CARD_ISO_DATE = "2025-08-31";
 
-    const shareText = encodeURIComponent("Há quanto tempo o Benfica não vê uma expulsão na Liga? Contador live");
+    function normaliseToUTCDate(date) {
+      return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+    }
+
+    function calculateDaysSince(isoDate) {
+      const [year, month, day] = isoDate.split("-").map(Number);
+      const lastRedCardUTC = Date.UTC(year, month - 1, day);
+      const todayUTC = normaliseToUTCDate(new Date());
+      const diffDays = Math.floor((todayUTC - lastRedCardUTC) / (1000 * 60 * 60 * 24));
+      return diffDays > 0 ? diffDays : 0;
+    }
+
+    const daysWithoutRedCards = calculateDaysSince(LAST_RED_CARD_ISO_DATE);
+    document.getElementById("daysCounter").textContent = daysWithoutRedCards;
+
+    const shareText = encodeURIComponent(`Há ${daysWithoutRedCards} dias que o Benfica não vê uma expulsão na Liga. Confere em tempo real!`);
     const shareURL = encodeURIComponent("https://www.zerovermelhos.live");
 
     document.getElementById('whatsapp-share').href = `https://api.whatsapp.com/send?text=${shareText}%20${shareURL}`;
