@@ -1,0 +1,53 @@
+name: Update Red Cards Data
+
+on:
+  schedule:
+    # Runs every Tuesday at 10:00 UTC (11:00 Lisbon time)
+    - cron: '0 10 * * 2'
+  
+  # Allows manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run update script
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: python scripts/update_red_cards.py --api
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code index.html || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add index.html
+          git commit -m "🔴 Auto-update: Red cards data $(date +'%Y-%m-%d')"
+          git push
+      
+      - name: No changes detected
+        if: steps.git-check.outputs.changes != 'true'
+        run: echo "✅ No changes detected - data is up to date"
