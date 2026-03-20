@@ -375,11 +375,11 @@ def run_check_only():
 
 MANUAL_DATA = {
     "enabled": False,  # Set to True to apply manual update
-    "date": "2025-08-31",  # ISO format YYYY-MM-DD
+    "date": "2026-03-14",  # ISO format YYYY-MM-DD
     "player": "Amar Dedić",
-    "match": "Alverca 1 - 2 Benfica",
-    "minute": "70'",
-    "card_type": "Second Yellow",  # "Red Card" or "Second Yellow"
+    "match": "Arouca 1 - 2 Benfica",
+    "minute": "90+8'",
+    "card_type": "Red Card",  # "Red Card" or "Second Yellow"
     "sporting_reds": 0,
     "porto_reds": 0,
 }
